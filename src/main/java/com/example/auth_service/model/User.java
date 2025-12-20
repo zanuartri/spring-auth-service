@@ -26,6 +26,7 @@ public class User {
 
     private String fullName;
 
+    @Builder.Default
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
