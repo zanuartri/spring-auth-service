@@ -24,6 +24,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final RefreshTokenService refreshTokenService;
 
     public void register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.email())) {
@@ -58,8 +59,9 @@ public class AuthService {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        String token = jwtProvider.generateToken(user);
+        String accessToken = jwtProvider.generateToken(user);
+        String refreshToken = refreshTokenService.createRefreshToken(user).getToken();
 
-        return new LoginResponse(token, "Bearer");
+        return new LoginResponse(accessToken, refreshToken, "Bearer");
     }
 }
