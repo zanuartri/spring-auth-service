@@ -12,6 +12,16 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
 
 # logging
 logging.level.org.springframework: INFO
